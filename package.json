@@ -1,0 +1,23 @@
+{
+  "name": "ad-entries-finder",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm run eslint",
+    "eslint": "eslint --ext .js src/"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "ldapjs": "^2.3.0",
+    "ldapjs-promise": "^1.0.6"
+  },
+  "devDependencies": {
+    "eslint": "^7.32.0",
+    "eslint-config-htmlacademy": "^4.0.2"
+  }
+}
