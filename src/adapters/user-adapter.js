@@ -32,8 +32,8 @@ const getUserAdapter = (userFromService) => {
       name: givenName,
       surname: sn,
       fullName: cn,
-      email: mail,
-      telephoneNumber,
+      email: mail ? mail : null,
+      telephoneNumber: telephoneNumber ? telephoneNumber : null,
       whenEmailCreated: msExchWhenMailboxCreated !== undefined ? ldapYmdToJsDate(msExchWhenMailboxCreated) : null,
     },
     company: {
