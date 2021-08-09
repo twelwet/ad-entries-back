@@ -1,6 +1,7 @@
 'use strict';
 
 const express = require(`express`);
+const cors = require('cors');
 const findAllEntries = require(`./find-methods/find-all-entries`);
 const queryUsers = require(`./find-methods/query-users`);
 const getUserAdapter = require(`./adapters/user-adapter`);
@@ -14,8 +15,9 @@ const app = express();
 
 app.set(`json spaces`, 2);
 app.use(express.json());
+app.use(cors());
 
-app.get(`/users`, async (req, res) => {
+app.get(`/download/users`, async (req, res) => {
   const result = await findAllEntries(Type.USER, Value.USER, getUserAdapter);
   res.json(result);
 });
@@ -27,12 +29,12 @@ app.get(`/users/:field/:queryValue`, async (req, res) => {
   res.json(result);
 });
 
-app.get(`/groups`, async (req, res) => {
+app.get(`/download/groups`, async (req, res) => {
   const result = await findAllEntries(Type.GROUP, Value.GROUP, getGroupAdapter);
   res.json(result);
 });
 
-app.get(`/ous`, async (req, res) => {
+app.get(`/download/ous`, async (req, res) => {
   const result = await findAllEntries(Type.OU, Value.OU, getOUAdapter);
   res.json(result);
 });

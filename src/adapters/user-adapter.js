@@ -34,7 +34,7 @@ const getUserAdapter = (userFromService) => {
       fullName: cn,
       email: mail,
       telephoneNumber,
-      whenEmailCreated: msExchWhenMailboxCreated === '0' ? undefined : ldapTimeValueToJsDate(msExchWhenMailboxCreated),
+      whenEmailCreated: msExchWhenMailboxCreated !== undefined ? ldapYmdToJsDate(msExchWhenMailboxCreated) : null,
     },
     company: {
       position: title,
@@ -43,7 +43,7 @@ const getUserAdapter = (userFromService) => {
     account: {
       name: sAMAccountName,
       fullName: userPrincipalName,
-      lastLogon: lastLogon === '0' ? undefined : ldapTimeValueToJsDate(lastLogon),
+      lastLogon: lastLogon === '0' ? null : ldapTimeValueToJsDate(lastLogon),
       whenCreated: ldapYmdToJsDate(whenCreated),
       whenChanged: ldapYmdToJsDate(whenChanged),
       pwdLastSet: ldapTimeValueToJsDate(pwdLastSet),

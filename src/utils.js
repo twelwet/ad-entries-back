@@ -22,4 +22,35 @@ const ldapYmdToJsDate = (ldapDate) => {
   return new Date(Date.UTC(b[0]+b[1], b[2]-1, b[3], b[4], b[5], b[6]));
 };
 
-module.exports = { saveToFile, ldapTimeValueToJsDate, ldapYmdToJsDate };
+const ldapSearch = async (client, settings, searchOptions, adapter) => {
+  await client.bind(settings.USERNAME, settings.PASSWORD, [])
+    .then(() => {
+      console.log(`Successful binding to ${settings.URL} by ${settings.USERNAME}`);
+      console.log(`Try fetch data by query '${searchOptions.filter}'`);
+    })
+    .catch((err) => console.log(`Error: ${err.message}`));
+
+  return await client.search(settings.BASE_DN, searchOptions)
+    .then((res) => {
+      const entries = [];
+      return new Promise((resolve, reject) => {
+        res.on(`searchEntry`, (entry) => {
+          entries.push(adapter(entry.object));
+        });
+
+        res.on(`error`, (error) => reject(error));
+
+        res.on('end', async (result) => {
+          if (result.status !== 0) {
+            return reject(result.status);
+          }
+          console.log(`Entries found: ${entries.length}`);
+
+          return resolve(entries);
+        });
+      });
+    })
+    .catch((err) => console.log(`Error: ${err.message}`));
+}
+
+module.exports = { saveToFile, ldapTimeValueToJsDate, ldapYmdToJsDate, ldapSearch };
