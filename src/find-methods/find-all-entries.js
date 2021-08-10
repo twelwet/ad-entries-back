@@ -1,7 +1,7 @@
 'use strict';
 
 const {client, Settings} = require(`../service/service`);
-const { ldapSearch, saveToFile } = require('../utils');
+const { ldapSearch } = require('../utils');
 
 const findAllEntries = async (objType, objValue, adapter = (...props) => props) => {
   const searchOptions = {
