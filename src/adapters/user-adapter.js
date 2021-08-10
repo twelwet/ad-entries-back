@@ -6,12 +6,10 @@ const getUserAdapter = (userFromService) => {
   const {
     objectClass,
     dn,
-    cn,
-    sn,
+    displayName,
     title,
     telephoneNumber,
     company,
-    givenName,
     lastLogon,
     whenCreated,
     whenChanged,
@@ -21,18 +19,20 @@ const getUserAdapter = (userFromService) => {
     userPrincipalName,
     sAMAccountName,
     mail,
+    memberOf,
+    drink,
   } = userFromService;
 
   return {
     objectInfo: {
       class: objectClass,
       dn,
+      memberOf,
     },
     person: {
-      name: givenName,
-      surname: sn,
-      fullName: cn,
+      displayName,
       email: mail ? mail : null,
+      emailBoxSize: drink ? drink : null,
       telephoneNumber: telephoneNumber ? telephoneNumber : null,
       whenEmailCreated: msExchWhenMailboxCreated !== undefined ? ldapYmdToJsDate(msExchWhenMailboxCreated) : null,
     },

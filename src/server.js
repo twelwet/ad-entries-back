@@ -3,7 +3,7 @@
 const express = require(`express`);
 const cors = require('cors');
 const findAllEntries = require(`./find-methods/find-all-entries`);
-const queryUsers = require(`./find-methods/query-users`);
+const queryEntries = require(`./find-methods/query-entries`);
 const getUserAdapter = require(`./adapters/user-adapter`);
 const getGroupAdapter = require(`./adapters/group-adapter`);
 const getOUAdapter = require(`./adapters/ou-adapter`);
@@ -25,7 +25,7 @@ app.get(`/download/users`, async (req, res) => {
 app.get(`/users/:field/:queryValue`, async (req, res) => {
   const field = req.params.field;
   const queryValue = req.params.queryValue;
-  const result = await queryUsers(field, queryValue, getUserAdapter);
+  const result = await queryEntries(Type.USER, Value.USER, field, queryValue, getUserAdapter);
   res.json(result);
 });
 
@@ -34,11 +34,24 @@ app.get(`/download/groups`, async (req, res) => {
   res.json(result);
 });
 
+app.get(`/groups/:field/:queryValue`, async (req, res) => {
+  const field = req.params.field;
+  const queryValue = req.params.queryValue;
+  const result = await queryEntries(Type.GROUP, Value.GROUP, field, queryValue, getUserAdapter);
+  res.json(result);
+});
+
 app.get(`/download/ous`, async (req, res) => {
   const result = await findAllEntries(Type.OU, Value.OU, getOUAdapter);
   res.json(result);
 });
 
+app.get(`/ous/:field/:queryValue`, async (req, res) => {
+  const field = req.params.field;
+  const queryValue = req.params.queryValue;
+  const result = await queryEntries(Type.OU, Value.OU, field, queryValue, getUserAdapter);
+  res.json(result);
+});
 
 app.listen(
     process.env.API_PORT,
