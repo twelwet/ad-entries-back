@@ -8,9 +8,7 @@ const findAllEntries = async (objType, objValue, adapter = (...props) => props) 
     scope: 'sub',
     filter: `(${objType}=${objValue})`,
   };
-  const result = await ldapSearch(client, Settings, searchOptions, adapter);
-  await saveToFile(`${objValue}s.json`, JSON.stringify(result));
-  return result;
+  return await ldapSearch(client, Settings, searchOptions, adapter);
 };
 
 module.exports = findAllEntries;

@@ -17,7 +17,7 @@ app.set(`json spaces`, 2);
 app.use(express.json());
 app.use(cors());
 
-app.get(`/download/users`, async (req, res) => {
+app.get(`/users/all`, async (req, res) => {
   const result = await findAllEntries(Type.USER, Value.USER, getUserAdapter);
   res.json(result);
 });
@@ -29,7 +29,7 @@ app.get(`/users/:field/:queryValue`, async (req, res) => {
   res.json(result);
 });
 
-app.get(`/download/groups`, async (req, res) => {
+app.get(`/groups/all`, async (req, res) => {
   const result = await findAllEntries(Type.GROUP, Value.GROUP, getGroupAdapter);
   res.json(result);
 });
@@ -41,7 +41,7 @@ app.get(`/groups/:field/:queryValue`, async (req, res) => {
   res.json(result);
 });
 
-app.get(`/download/ous`, async (req, res) => {
+app.get(`/ous/all`, async (req, res) => {
   const result = await findAllEntries(Type.OU, Value.OU, getOUAdapter);
   res.json(result);
 });
