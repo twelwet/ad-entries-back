@@ -22,6 +22,7 @@ const getUserAdapter = (userFromService) => {
     mail,
     memberOf,
     drink,
+    mDBOverQuotaLimit,
   } = userFromService;
 
   return {
@@ -38,6 +39,7 @@ const getUserAdapter = (userFromService) => {
         displayName,
         email: mail ? mail : null,
         emailBoxSize: drink ? drink : null,
+        emailQuota: mDBOverQuotaLimit,
         telephoneNumber: telephoneNumber ? telephoneNumber : null,
         whenEmailCreated: msExchWhenMailboxCreated !== undefined ? ldapYmdToJsDate(msExchWhenMailboxCreated) : null,
       },
