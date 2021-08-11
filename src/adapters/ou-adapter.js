@@ -22,7 +22,7 @@ const getOUAdapter = (oUFromService) => {
       class: objectClass,
       dn,
       category: objectCategory,
-      memberOf,
+      memberOf: typeof memberOf === 'string' ? [memberOf]: memberOf,
       whenCreated: ldapYmdToJsDate(whenCreated),
       whenChanged: ldapYmdToJsDate(whenChanged),
     },
