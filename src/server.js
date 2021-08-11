@@ -37,7 +37,7 @@ app.get(`/groups/all`, async (req, res) => {
 app.get(`/groups/:field/:queryValue`, async (req, res) => {
   const field = req.params.field;
   const queryValue = req.params.queryValue;
-  const result = await queryEntries(Type.GROUP, Value.GROUP, field, queryValue, getUserAdapter);
+  const result = await queryEntries(Type.GROUP, Value.GROUP, field, queryValue, getGroupAdapter);
   res.json(result);
 });
 
@@ -49,7 +49,7 @@ app.get(`/ous/all`, async (req, res) => {
 app.get(`/ous/:field/:queryValue`, async (req, res) => {
   const field = req.params.field;
   const queryValue = req.params.queryValue;
-  const result = await queryEntries(Type.OU, Value.OU, field, queryValue, getUserAdapter);
+  const result = await queryEntries(Type.OU, Value.OU, field, queryValue, getOUAdapter);
   res.json(result);
 });
 

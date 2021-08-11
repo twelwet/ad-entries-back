@@ -11,24 +11,26 @@ const getOUAdapter = (oUFromService) => {
     description,
     whenCreated,
     whenChanged,
+    memberOf,
     l,
     st,
     street,
   } = oUFromService;
 
   return {
-    objectClass,
-    objectCategory,
-    dn,
-    title: ou,
-    description,
-    location: {
-      region: st,
-      city: l,
-      street,
+    objectInfo: {
+      class: objectClass,
+      dn,
+      category: objectCategory,
+      memberOf,
+      whenCreated: ldapYmdToJsDate(whenCreated),
+      whenChanged: ldapYmdToJsDate(whenChanged),
     },
-    whenCreated: ldapYmdToJsDate(whenCreated),
-    whenChanged: ldapYmdToJsDate(whenChanged),
+    ou: {
+      title: ou,
+      description,
+      location: { region: st, city: l, street },
+    },
   };
 };
 

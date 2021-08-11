@@ -5,6 +5,7 @@ const { ldapTimeValueToJsDate, ldapYmdToJsDate } = require('../utils');
 const getUserAdapter = (userFromService) => {
   const {
     objectClass,
+    objectCategory,
     dn,
     displayName,
     title,
@@ -27,27 +28,27 @@ const getUserAdapter = (userFromService) => {
     objectInfo: {
       class: objectClass,
       dn,
+      category: objectCategory,
       memberOf,
-    },
-    person: {
-      displayName,
-      email: mail ? mail : null,
-      emailBoxSize: drink ? drink : null,
-      telephoneNumber: telephoneNumber ? telephoneNumber : null,
-      whenEmailCreated: msExchWhenMailboxCreated !== undefined ? ldapYmdToJsDate(msExchWhenMailboxCreated) : null,
-    },
-    company: {
-      position: title,
-      name: company,
-    },
-    account: {
-      name: sAMAccountName,
-      fullName: userPrincipalName,
-      lastLogon: lastLogon === '0' ? null : ldapTimeValueToJsDate(lastLogon),
       whenCreated: ldapYmdToJsDate(whenCreated),
       whenChanged: ldapYmdToJsDate(whenChanged),
-      pwdLastSet: ldapTimeValueToJsDate(pwdLastSet),
-      logonCount,
+    },
+    user: {
+      person: {
+        displayName,
+        email: mail ? mail : null,
+        emailBoxSize: drink ? drink : null,
+        telephoneNumber: telephoneNumber ? telephoneNumber : null,
+        whenEmailCreated: msExchWhenMailboxCreated !== undefined ? ldapYmdToJsDate(msExchWhenMailboxCreated) : null,
+      },
+      company: { position: title, name: company },
+      account: {
+        name: sAMAccountName,
+        fullName: userPrincipalName,
+        lastLogon: lastLogon === '0' ? null : ldapTimeValueToJsDate(lastLogon),
+        pwdLastSet: ldapTimeValueToJsDate(pwdLastSet),
+        logonCount,
+      },
     },
   };
 };

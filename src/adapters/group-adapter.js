@@ -12,17 +12,23 @@ const getGroupAdapter = (groupFromService) => {
     memberOf,
     whenCreated,
     whenChanged,
+    member,
   } = groupFromService;
 
   return {
-    objectClass,
-    objectCategory,
-    dn,
-    title: cn,
-    description,
-    memberOf,
-    whenCreated: ldapYmdToJsDate(whenCreated),
-    whenChanged: ldapYmdToJsDate(whenChanged),
+    objectInfo: {
+      class: objectClass,
+      dn,
+      category: objectCategory,
+      memberOf,
+      whenCreated: ldapYmdToJsDate(whenCreated),
+      whenChanged: ldapYmdToJsDate(whenChanged),
+    },
+    group: {
+      title: cn,
+      description,
+      member,
+    }
   };
 };
 
