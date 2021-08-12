@@ -2,6 +2,16 @@
 
 const { ldapYmdToJsDate } = require('../utils');
 
+const getMember = (member) => {
+  if (!member) {
+    return [];
+  }
+  if (typeof member === 'string') {
+    return [member];
+  }
+  return member;
+}
+
 const getGroupAdapter = (groupFromService) => {
   const {
     objectClass,
@@ -27,7 +37,7 @@ const getGroupAdapter = (groupFromService) => {
     group: {
       title: cn,
       description,
-      member: typeof member === 'string' ? [member]: member,
+      member: getMember(member),
     }
   };
 };
