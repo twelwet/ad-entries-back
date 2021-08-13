@@ -16,7 +16,8 @@
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "ldapjs": "^2.3.0",
-    "ldapjs-promise": "^1.0.6"
+    "ldapjs-promise": "^1.0.6",
+    "moment": "^2.29.1"
   },
   "devDependencies": {
     "eslint": "^7.32.0",
