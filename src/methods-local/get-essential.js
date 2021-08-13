@@ -7,43 +7,43 @@ const { FileName } = require('../constants');
 
 const getEssential = async () => {
   try {
-    const allUsers = JSON.parse(await readFromFile(FileName.USERS));
-    const usersWithEmails = allUsers.filter((entry) => entry.user.person.email);
+    const allEntries = JSON.parse(await readFromFile(FileName.USERS));
+    const emailEntries = allEntries.filter((entry) => entry.user.person.email);
 
-    const allBoxesSize = usersWithEmails
+    const allBoxesSize = emailEntries
       .filter((entry) => entry.user.person.emailBoxSize)
       .map((entry) => getBoxSize(entry.user.person.emailBoxSize)).reduce(reducer);
 
-    const disabledUsers = allUsers.filter((entry) => isDisabled(entry.user.account.status));
-    const enabledUsers = allUsers.filter((entry) => isEnabled(entry.user.account.status));
+    const disabledUsers = allEntries.filter((entry) => isDisabled(entry.user.account.status));
+    const enabledUsers = allEntries.filter((entry) => isEnabled(entry.user.account.status));
 
-    const disabledEmails = usersWithEmails.filter((entry) => isDisabled(entry.user.account.status));
-    const enabledEmails = usersWithEmails.filter((entry) => isEnabled(entry.user.account.status));
+    const disabledEmails = emailEntries.filter((entry) => isDisabled(entry.user.account.status));
+    const enabledEmails = emailEntries.filter((entry) => isEnabled(entry.user.account.status));
 
-    const userCreations = allUsers.map((entry) => moment(entry.objectInfo.whenCreated).format('YYYY'));
-    const emailCreations = usersWithEmails.map((entry) => moment(entry.objectInfo.whenCreated).format('YYYY'));
+    const userCreations = allEntries.map((entry) => moment(entry.objectInfo.whenCreated).format('YYYY'));
+    const emailCreations = emailEntries.map((entry) => moment(entry.objectInfo.whenCreated).format('YYYY'));
 
     const yearsOfUsersCreation = getYears(userCreations);
     const yearsOfEmailsCreation = getYears(emailCreations);
 
-    const userLastLogons = allUsers.map((entry) => entry.user.account.lastLogon === null ? 'never' : moment(entry.user.account.lastLogon).format('YYYY'));
-    const emailLastLogons = usersWithEmails.map((entry) => entry.user.account.lastLogon === null ? 'never' : moment(entry.user.account.lastLogon).format('YYYY'));
+    const userLastLogons = allEntries.map((entry) => entry.user.account.lastLogon === null ? 'never' : moment(entry.user.account.lastLogon).format('YYYY'));
+    const emailLastLogons = emailEntries.map((entry) => entry.user.account.lastLogon === null ? 'never' : moment(entry.user.account.lastLogon).format('YYYY'));
 
     const yearsOfUsersLastLogons = getYears(userLastLogons);
     const yearsOfEmailsLastLogons = getYears(emailLastLogons);
 
     return {
       accounts: {
-        all: allUsers.length,
+        all: allEntries.length,
         enabled: enabledUsers.length,
         disabled: disabledUsers.length,
-        withEmails: usersWithEmails.length,
+        withEmails: emailEntries.length,
         creation: mapEntriesToYears(yearsOfUsersCreation, userCreations),
         lastLogon: mapEntriesToYears(yearsOfUsersLastLogons, userLastLogons)
       },
       emails: {
         allBoxesSize,
-        all: usersWithEmails.length,
+        all: emailEntries.length,
         enabled: enabledEmails.length,
         disabled: disabledEmails.length,
         creation: mapEntriesToYears(yearsOfEmailsCreation, emailCreations),

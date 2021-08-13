@@ -2,14 +2,14 @@
 
 const express = require(`express`);
 const cors = require('cors');
-const downLoadAllEntries = require(`./find-methods/download-all-entries`);
-const queryEntries = require(`./find-methods/query-entries`);
+const downLoadAllEntries = require(`./methods-remote/download-all-entries`);
+const queryEntries = require(`./methods-remote/query-entries`);
 const getUserAdapter = require(`./adapters/user-adapter`);
 const getGroupAdapter = require(`./adapters/group-adapter`);
 const getOUAdapter = require(`./adapters/ou-adapter`);
 const { LdapObject, FileName } = require(`./constants`);
-const getTopBoxes = require('./local-methods/get-top-boxes');
-const getEssential = require('./local-methods/get-essential');
+const getTopBoxes = require('./methods-local/get-top-boxes');
+const getEssential = require('./methods-local/get-essential');
 
 const { Type, Value } = LdapObject;
 
