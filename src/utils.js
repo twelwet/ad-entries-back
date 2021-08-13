@@ -15,6 +15,19 @@ const saveToFile = async (path, data) => {
   }
 };
 
+const readFromFile = async (path) => {
+  const readFile = promisify(fs.readFile);
+
+  try {
+    const result = await readFile(path);
+    console.log(`Operation success. File '${path}' is read.`);
+    return result;
+
+  } catch (error) {
+    console.error(`Can't read file '${path}'`);
+  }
+};
+
 const ldapTimeValueToJsDate = (ldapDate) => new Date(ldapDate/1e4 - 1.16444736e13);
 
 const ldapYmdToJsDate = (ldapDate) => {
@@ -53,4 +66,4 @@ const ldapSearch = async (client, settings, searchOptions, adapter) => {
     .catch((err) => console.log(`Error: ${err.message}`));
 }
 
-module.exports = { saveToFile, ldapTimeValueToJsDate, ldapYmdToJsDate, ldapSearch };
+module.exports = { saveToFile, readFromFile, ldapTimeValueToJsDate, ldapYmdToJsDate, ldapSearch };

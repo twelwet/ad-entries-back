@@ -5,7 +5,11 @@ const ExitCode = {
   FAILURE: 1
 };
 
-const FILE_NAME = `entries.json`;
+const FileName = {
+  USERS: 'src/entries/users.json',
+  GROUPS: 'src/entries/groups.json',
+  OUS: 'src/entries/ous.json',
+}
 
 const LdapObject = {
   Type: {
@@ -27,4 +31,9 @@ const LdapField = {
   },
 };
 
-module.exports = { ExitCode, FILE_NAME, LdapObject, LdapField };
+const UserStatus = {
+  ENABLED: [512, 544, 4096, 4128, 66048, 66080, 69632, 528384, 532480],
+  DISABLED: [514, 546, 4098, 66050, 66082],
+};
+
+module.exports = { ExitCode, FileName, LdapObject, LdapField, UserStatus };

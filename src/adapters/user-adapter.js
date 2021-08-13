@@ -23,6 +23,7 @@ const getUserAdapter = (userFromService) => {
     memberOf,
     drink,
     mDBOverQuotaLimit,
+    userAccountControl,
   } = userFromService;
 
   return {
@@ -45,6 +46,7 @@ const getUserAdapter = (userFromService) => {
       },
       company: { position: title, name: company },
       account: {
+        status: userAccountControl,
         name: sAMAccountName,
         fullName: userPrincipalName,
         lastLogon: lastLogon === '0' ? null : ldapTimeValueToJsDate(lastLogon),
