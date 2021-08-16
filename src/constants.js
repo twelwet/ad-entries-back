@@ -6,10 +6,10 @@ const ExitCode = {
 };
 
 const FileName = {
-  USERS: 'src/entries/users.json',
-  GROUPS: 'src/entries/groups.json',
-  OUS: 'src/entries/ous.json',
-}
+  USERS: `src/entries/users.json`,
+  GROUPS: `src/entries/groups.json`,
+  OUS: `src/entries/ous.json`,
+};
 
 const LdapObject = {
   Type: {
@@ -38,4 +38,4 @@ const UserStatus = {
 
 const TOP_BOXES = 100;
 
-module.exports = { ExitCode, FileName, LdapObject, LdapField, UserStatus, TOP_BOXES };
+module.exports = {ExitCode, FileName, LdapObject, LdapField, UserStatus, TOP_BOXES};

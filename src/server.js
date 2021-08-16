@@ -1,18 +1,17 @@
 'use strict';
 
 const express = require(`express`);
-const cors = require('cors');
+const cors = require(`cors`);
 const downLoadAllEntries = require(`./methods-remote/download-all-entries`);
 const queryEntries = require(`./methods-remote/query-entries`);
 const getUserAdapter = require(`./adapters/user-adapter`);
 const getGroupAdapter = require(`./adapters/group-adapter`);
 const getOUAdapter = require(`./adapters/ou-adapter`);
-const { LdapObject, FileName } = require(`./constants`);
-const getTopBoxes = require('./methods-local/get-top-boxes');
-const getAccounts = require('./methods-local/get-accounts');
-const getEmails = require('./methods-local/get-emails')
+const {LdapObject, FileName} = require(`./constants`);
+const getAccounts = require(`./methods-local/get-accounts`);
+const getEmails = require(`./methods-local/get-emails`);
 
-const { Type, Value } = LdapObject;
+const {Type, Value} = LdapObject;
 
 const app = express();
 
@@ -29,11 +28,6 @@ app.get(`/users/:field/:queryValue`, async (req, res) => {
   const field = req.params.field;
   const queryValue = req.params.queryValue;
   const result = await queryEntries(Type.USER, Value.USER, field, queryValue, getUserAdapter);
-  res.json(result);
-});
-
-app.get(`/top-boxes`, async (req, res) => {
-  const result = await getTopBoxes(10);
   res.json(result);
 });
 
@@ -73,5 +67,5 @@ app.get(`/ous/:field/:queryValue`, async (req, res) => {
 
 app.listen(
     process.env.API_PORT,
-  () => console.log(`Server starts on port: ${process.env.API_PORT}`)
+    () => console.log(`Server starts on port: ${process.env.API_PORT}`)
 );

@@ -1,6 +1,6 @@
 'use strict';
 
-const { ldapYmdToJsDate } = require('../utils');
+const {ldapYmdToJsDate} = require(`../utils`);
 
 const getOUAdapter = (oUFromService) => {
   const {
@@ -22,14 +22,14 @@ const getOUAdapter = (oUFromService) => {
       class: objectClass,
       dn,
       category: objectCategory,
-      memberOf: typeof memberOf === 'string' ? [memberOf]: memberOf,
+      memberOf: typeof memberOf === `string` ? [memberOf] : memberOf,
       whenCreated: ldapYmdToJsDate(whenCreated),
       whenChanged: ldapYmdToJsDate(whenChanged),
     },
     ou: {
       title: ou,
       description,
-      location: { region: st, city: l, street },
+      location: {region: st, city: l, street},
     },
   };
 };

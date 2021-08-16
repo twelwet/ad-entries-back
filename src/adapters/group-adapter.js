@@ -1,16 +1,16 @@
 'use strict';
 
-const { ldapYmdToJsDate } = require('../utils');
+const {ldapYmdToJsDate} = require(`../utils`);
 
 const getMember = (member) => {
   if (!member) {
     return [];
   }
-  if (typeof member === 'string') {
+  if (typeof member === `string`) {
     return [member];
   }
   return member;
-}
+};
 
 const getGroupAdapter = (groupFromService) => {
   const {
@@ -30,7 +30,7 @@ const getGroupAdapter = (groupFromService) => {
       class: objectClass,
       dn,
       category: objectCategory,
-      memberOf: typeof memberOf === 'string' ? [memberOf]: memberOf,
+      memberOf: typeof memberOf === `string` ? [memberOf] : memberOf,
       whenCreated: ldapYmdToJsDate(whenCreated),
       whenChanged: ldapYmdToJsDate(whenChanged),
     },

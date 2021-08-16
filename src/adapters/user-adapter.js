@@ -1,6 +1,6 @@
 'use strict';
 
-const { ldapTimeValueToJsDate, ldapYmdToJsDate } = require('../utils');
+const {ldapTimeValueToJsDate, ldapYmdToJsDate} = require(`../utils`);
 
 const getUserAdapter = (userFromService) => {
   const {
@@ -31,7 +31,7 @@ const getUserAdapter = (userFromService) => {
       class: objectClass,
       dn,
       category: objectCategory,
-      memberOf: typeof memberOf === 'string' ? [memberOf]: memberOf,
+      memberOf: typeof memberOf === `string` ? [memberOf] : memberOf,
       whenCreated: ldapYmdToJsDate(whenCreated),
       whenChanged: ldapYmdToJsDate(whenChanged),
     },
@@ -44,12 +44,12 @@ const getUserAdapter = (userFromService) => {
         telephoneNumber: telephoneNumber ? telephoneNumber : null,
         whenEmailCreated: msExchWhenMailboxCreated !== undefined ? ldapYmdToJsDate(msExchWhenMailboxCreated) : null,
       },
-      company: { position: title, name: company },
+      company: {position: title, name: company},
       account: {
         status: userAccountControl,
         name: sAMAccountName,
         fullName: userPrincipalName,
-        lastLogon: lastLogon === '0' ? null : ldapTimeValueToJsDate(lastLogon),
+        lastLogon: lastLogon === `0` ? null : ldapTimeValueToJsDate(lastLogon),
         pwdLastSet: ldapTimeValueToJsDate(pwdLastSet),
         logonCount,
       },

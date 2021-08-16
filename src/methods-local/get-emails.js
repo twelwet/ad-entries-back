@@ -1,9 +1,9 @@
 'use strict';
 
-const moment = require('moment');
-const { readFromFile } = require('../utils');
-const { reducer, getBoxSize, isDisabled, isEnabled, getYears, mapEntriesToYears } = require('./utils');
-const { FileName, TOP_BOXES } = require('../constants');
+const moment = require(`moment`);
+const {readFromFile} = require(`../utils`);
+const {reducer, getBoxSize, isDisabled, isEnabled, getYears, mapEntriesToYears} = require(`./utils`);
+const {FileName, TOP_BOXES} = require(`../constants`);
 
 const getAccounts = async () => {
   try {
@@ -21,11 +21,11 @@ const getAccounts = async () => {
     const disabledEmails = emailEntries.filter((entry) => isDisabled(entry.user.account.status));
     const enabledEmails = emailEntries.filter((entry) => isEnabled(entry.user.account.status));
 
-    const emailCreations = emailEntries.map((entry) => `year${moment(entry.objectInfo.whenCreated).format('YYYY')}`);
+    const emailCreations = emailEntries.map((entry) => `year${moment(entry.objectInfo.whenCreated).format(`YYYY`)}`);
 
     const yearsOfEmailsCreation = getYears(emailCreations);
 
-    const emailLastLogons = emailEntries.map((entry) => entry.user.account.lastLogon === null ? 'never' : `year${moment(entry.user.account.lastLogon).format('YYYY')}`);
+    const emailLastLogons = emailEntries.map((entry) => entry.user.account.lastLogon === null ? `never` : `year${moment(entry.user.account.lastLogon).format(`YYYY`)}`);
 
     const yearsOfEmailsLastLogons = getYears(emailLastLogons);
 
@@ -42,7 +42,7 @@ const getAccounts = async () => {
       topBoxes,
     };
 
-  } catch(err) {
+  } catch (err) {
     return err.message;
   }
 };

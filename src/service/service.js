@@ -1,6 +1,6 @@
 'use strict';
 
-const ldap = require('ldapjs-promise');
+const ldap = require(`ldapjs-promise`);
 require(`dotenv`).config();
 
 const Settings = {

@@ -25,14 +25,15 @@ const readFromFile = async (path) => {
 
   } catch (error) {
     console.error(`Can't read file '${path}'`);
+    return error.message;
   }
 };
 
-const ldapTimeValueToJsDate = (ldapDate) => new Date(ldapDate/1e4 - 1.16444736e13);
+const ldapTimeValueToJsDate = (ldapDate) => new Date(ldapDate / 1e4 - 1.16444736e13);
 
 const ldapYmdToJsDate = (ldapDate) => {
   const b = ldapDate.match(/\d\d/g);
-  return new Date(Date.UTC(b[0]+b[1], b[2]-1, b[3], b[4], b[5], b[6]));
+  return new Date(Date.UTC(b[0] + b[1], b[2] - 1, b[3], b[4], b[5], b[6]));
 };
 
 const ldapSearch = async (client, settings, searchOptions, adapter) => {
@@ -53,7 +54,7 @@ const ldapSearch = async (client, settings, searchOptions, adapter) => {
 
         res.on(`error`, (error) => reject(error));
 
-        res.on('end', async (result) => {
+        res.on(`end`, async (result) => {
           if (result.status !== 0) {
             return reject(result.status);
           }
@@ -64,6 +65,6 @@ const ldapSearch = async (client, settings, searchOptions, adapter) => {
       });
     })
     .catch((err) => console.log(`Error: ${err.message}`));
-}
+};
 
-module.exports = { saveToFile, readFromFile, ldapTimeValueToJsDate, ldapYmdToJsDate, ldapSearch };
+module.exports = {saveToFile, readFromFile, ldapTimeValueToJsDate, ldapYmdToJsDate, ldapSearch};

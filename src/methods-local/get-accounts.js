@@ -1,9 +1,9 @@
 'use strict';
 
-const moment = require('moment');
-const { readFromFile } = require('../utils');
-const { isDisabled, isEnabled, getYears, mapEntriesToYears } = require('./utils');
-const { FileName } = require('../constants');
+const moment = require(`moment`);
+const {readFromFile} = require(`../utils`);
+const {isDisabled, isEnabled, getYears, mapEntriesToYears} = require(`./utils`);
+const {FileName} = require(`../constants`);
 
 const getAccounts = async () => {
   try {
@@ -13,11 +13,11 @@ const getAccounts = async () => {
     const disabledUsers = allEntries.filter((entry) => isDisabled(entry.user.account.status));
     const enabledUsers = allEntries.filter((entry) => isEnabled(entry.user.account.status));
 
-    const userCreations = allEntries.map((entry) => `year${moment(entry.objectInfo.whenCreated).format('YYYY')}`);
+    const userCreations = allEntries.map((entry) => `year${moment(entry.objectInfo.whenCreated).format(`YYYY`)}`);
 
     const yearsOfUsersCreation = getYears(userCreations);
 
-    const userLastLogons = allEntries.map((entry) => entry.user.account.lastLogon === null ? 'never' : `year${moment(entry.user.account.lastLogon).format('YYYY')}`);
+    const userLastLogons = allEntries.map((entry) => entry.user.account.lastLogon === null ? `never` : `year${moment(entry.user.account.lastLogon).format(`YYYY`)}`);
 
     const yearsOfUsersLastLogons = getYears(userLastLogons);
 
@@ -33,7 +33,7 @@ const getAccounts = async () => {
       lastLogon: mapEntriesToYears(yearsOfUsersLastLogons, userLastLogons)
     };
 
-  } catch(err) {
+  } catch (err) {
     return err.message;
   }
 };
