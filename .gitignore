@@ -9,6 +9,9 @@
 # production
 /build
 
+# data-entries
+/entries
+
 # misc
 Thumbs.db
 .DS_Store
