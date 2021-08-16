@@ -9,7 +9,8 @@ const getGroupAdapter = require(`./adapters/group-adapter`);
 const getOUAdapter = require(`./adapters/ou-adapter`);
 const { LdapObject, FileName } = require(`./constants`);
 const getTopBoxes = require('./methods-local/get-top-boxes');
-const getEssential = require('./methods-local/get-essential');
+const getAccounts = require('./methods-local/get-accounts');
+const getEmails = require('./methods-local/get-emails')
 
 const { Type, Value } = LdapObject;
 
@@ -36,8 +37,13 @@ app.get(`/top-boxes`, async (req, res) => {
   res.json(result);
 });
 
-app.get(`/essential`, async (req, res) => {
-  const result = await getEssential();
+app.get(`/accounts`, async (req, res) => {
+  const result = await getAccounts();
+  res.json(result);
+});
+
+app.get(`/emails`, async (req, res) => {
+  const result = await getEmails();
   res.json(result);
 });
 

@@ -36,4 +36,6 @@ const UserStatus = {
   DISABLED: [514, 546, 4098, 66050, 66082],
 };
 
-module.exports = { ExitCode, FileName, LdapObject, LdapField, UserStatus };
+const TOP_BOXES = 100;
+
+module.exports = { ExitCode, FileName, LdapObject, LdapField, UserStatus, TOP_BOXES };
