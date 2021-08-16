@@ -7,7 +7,7 @@ const { FileName } = require('../constants');
 
 const getAccounts = async () => {
   try {
-    const allEntries = JSON.parse(await readFromFile(FileName.USERS));
+    const {timeStamp, data: allEntries} = JSON.parse(await readFromFile(FileName.USERS));
     const emailEntries = allEntries.filter((entry) => entry.user.person.email);
 
     const disabledUsers = allEntries.filter((entry) => isDisabled(entry.user.account.status));
@@ -22,6 +22,7 @@ const getAccounts = async () => {
     const yearsOfUsersLastLogons = getYears(userLastLogons);
 
     return {
+      timeStamp,
       count: {
         all: allEntries.length,
         enabled: enabledUsers.length,

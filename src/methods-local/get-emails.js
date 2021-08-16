@@ -7,7 +7,7 @@ const { FileName, TOP_BOXES } = require('../constants');
 
 const getAccounts = async () => {
   try {
-    const allEntries = JSON.parse(await readFromFile(FileName.USERS));
+    const {timeStamp, data: allEntries} = JSON.parse(await readFromFile(FileName.USERS));
     const emailEntries = allEntries.filter((entry) => entry.user.person.email);
 
     const topBoxes = emailEntries
@@ -30,6 +30,7 @@ const getAccounts = async () => {
     const yearsOfEmailsLastLogons = getYears(emailLastLogons);
 
     return {
+      timeStamp,
       count: {
         all: emailEntries.length,
         enabled: enabledEmails.length,
