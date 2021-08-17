@@ -16,7 +16,7 @@ const mapEntriesToYears = (years, entries) => years
       .filter((entry) => entry === year).length}));
 
 const getDisabledUsers = (users) => users.filter((entry) => isDisabled(entry.user.account.status));
-const getEnabledUsers = (users)  => users.filter((entry) => isEnabled(entry.user.account.status));
+const getEnabledUsers = (users) => users.filter((entry) => isEnabled(entry.user.account.status));
 
 const mapUsersToCreationYears = (users) => users.map((entry) => `year${moment(entry.objectInfo.whenCreated).format(`YYYY`)}`);
 const mapUsersToLastLogonYears = (users) => users.map((entry) => entry.user.account.lastLogon === null ? `never` : `year${moment(entry.user.account.lastLogon).format(`YYYY`)}`);

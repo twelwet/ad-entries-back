@@ -20,49 +20,95 @@ app.use(express.json());
 app.use(cors());
 
 app.get(`/users/all`, async (req, res) => {
-  const result = await downLoadAllEntries(Type.USER, Value.USER, getUserAdapter, FileName.USERS);
-  res.json(result);
+  try {
+    const result = await downLoadAllEntries(Type.USER, Value.USER, getUserAdapter, FileName.USERS);
+    res.json(result);
+    console.log(`${req.method} ${req.originalUrl} --> res status code ${res.statusCode}`);
+  } catch (error) {
+    res.json([]);
+    console.error(`Error occurs: ${error}`);
+  }
 });
 
 app.get(`/users/:field/:queryValue`, async (req, res) => {
-  const field = req.params.field;
-  const queryValue = req.params.queryValue;
-  const result = await queryEntries(Type.USER, Value.USER, field, queryValue, getUserAdapter);
-  res.json(result);
+  try {
+    const field = req.params.field;
+    const queryValue = req.params.queryValue;
+    const result = await queryEntries(Type.USER, Value.USER, field, queryValue, getUserAdapter);
+    res.json(result);
+    console.log(`${req.method} ${req.originalUrl} --> res status code ${res.statusCode}`);
+  } catch (error) {
+    res.json([]);
+    console.error(`Error occurs: ${error}`);
+  }
 });
 
 app.get(`/accounts`, async (req, res) => {
-  const result = await getAccounts();
-  res.json(result);
+  try {
+    res.json(await getAccounts());
+    console.log(`${req.method} ${req.originalUrl} --> res status code ${res.statusCode}`);
+  } catch (error) {
+    res.json({});
+    console.error(`Error occurs: ${error}`);
+  }
 });
 
 app.get(`/emails`, async (req, res) => {
-  const result = await getEmails();
-  res.json(result);
+  try {
+    res.json(await getEmails());
+    console.log(`${req.method} ${req.originalUrl} --> res status code ${res.statusCode}`);
+  } catch (error) {
+    res.json({});
+    console.error(`Error occurs: ${error}`);
+  }
 });
 
 app.get(`/groups/all`, async (req, res) => {
-  const result = await downLoadAllEntries(Type.GROUP, Value.GROUP, getGroupAdapter, FileName.GROUPS);
-  res.json(result);
+  try {
+    const result = await downLoadAllEntries(Type.GROUP, Value.GROUP, getGroupAdapter, FileName.GROUPS);
+    res.json(result);
+    console.log(`${req.method} ${req.originalUrl} --> res status code ${res.statusCode}`);
+  } catch (error) {
+    res.json([]);
+    console.error(`Error occurs: ${error}`);
+  }
 });
 
 app.get(`/groups/:field/:queryValue`, async (req, res) => {
-  const field = req.params.field;
-  const queryValue = req.params.queryValue;
-  const result = await queryEntries(Type.GROUP, Value.GROUP, field, queryValue, getGroupAdapter);
-  res.json(result);
+  try {
+    const field = req.params.field;
+    const queryValue = req.params.queryValue;
+    const result = await queryEntries(Type.GROUP, Value.GROUP, field, queryValue, getGroupAdapter);
+    res.json(result);
+    console.log(`${req.method} ${req.originalUrl} --> res status code ${res.statusCode}`);
+  } catch (error) {
+    res.json([]);
+    console.error(`Error occurs: ${error}`);
+  }
 });
 
 app.get(`/ous/all`, async (req, res) => {
-  const result = await downLoadAllEntries(Type.OU, Value.OU, getOUAdapter, FileName.OUS);
-  res.json(result);
+  try {
+    const result = await downLoadAllEntries(Type.OU, Value.OU, getOUAdapter, FileName.OUS);
+    res.json(result);
+    console.log(`${req.method} ${req.originalUrl} --> res status code ${res.statusCode}`);
+  } catch (error) {
+    res.json([]);
+    console.error(`Error occurs: ${error}`);
+  }
 });
 
 app.get(`/ous/:field/:queryValue`, async (req, res) => {
-  const field = req.params.field;
-  const queryValue = req.params.queryValue;
-  const result = await queryEntries(Type.OU, Value.OU, field, queryValue, getOUAdapter);
-  res.json(result);
+  try {
+    const field = req.params.field;
+    const queryValue = req.params.queryValue;
+    const result = await queryEntries(Type.OU, Value.OU, field, queryValue, getOUAdapter);
+    res.json(result);
+    console.log(`${req.method} ${req.originalUrl} --> res status code ${res.statusCode}`);
+  } catch (error) {
+    res.json([]);
+    console.error(`Error occurs: ${error}`);
+  }
 });
 
 app.listen(
