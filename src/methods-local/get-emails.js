@@ -1,13 +1,13 @@
 'use strict';
 
 const moment = require(`moment`);
-const {readFromFile} = require(`../utils`);
 const {reducer, getBoxSize, isDisabled, isEnabled, getYears, mapEntriesToYears} = require(`./utils`);
-const {FileName, TOP_BOXES} = require(`../constants`);
+const {TOP_BOXES} = require(`../constants`);
+const getUsers = require(`../data/get-users`);
 
-const getAccounts = async () => {
+const getEmails = async () => {
   try {
-    const {timeStamp, data: allEntries} = JSON.parse(await readFromFile(FileName.USERS));
+    const {timeStamp, data: allEntries} = await getUsers();
     const emailEntries = allEntries.filter((entry) => entry.user.person.email);
 
     const topBoxes = emailEntries
@@ -47,4 +47,4 @@ const getAccounts = async () => {
   }
 };
 
-module.exports = getAccounts;
+module.exports = getEmails;

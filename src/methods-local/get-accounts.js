@@ -1,13 +1,12 @@
 'use strict';
 
 const moment = require(`moment`);
-const {readFromFile} = require(`../utils`);
 const {isDisabled, isEnabled, getYears, mapEntriesToYears} = require(`./utils`);
-const {FileName} = require(`../constants`);
+const getUsers = require(`../data/get-users`);
 
 const getAccounts = async () => {
   try {
-    const {timeStamp, data: allEntries} = JSON.parse(await readFromFile(FileName.USERS));
+    const {timeStamp, data: allEntries} = await getUsers();
     const emailEntries = allEntries.filter((entry) => entry.user.person.email);
 
     const disabledUsers = allEntries.filter((entry) => isDisabled(entry.user.account.status));
