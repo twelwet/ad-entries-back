@@ -1,7 +1,15 @@
 'use strict';
 
-const moment = require(`moment`);
-const {reducer, getBoxSize, isDisabled, isEnabled, getYears, mapEntriesToYears} = require(`./utils`);
+const {
+  reducer,
+  getBoxSize,
+  getDisabledUsers,
+  getEnabledUsers,
+  mapUsersToCreationYears,
+  mapUsersToLastLogonYears,
+  getYears,
+  mapEntriesToYears,
+} = require(`./utils`);
 const {TOP_BOXES} = require(`../constants`);
 const getUsers = require(`../data/get-users`);
 
@@ -18,23 +26,18 @@ const getEmails = async () => {
       .filter((entry) => entry.user.person.emailBoxSize)
       .map((entry) => getBoxSize(entry.user.person.emailBoxSize)).reduce(reducer);
 
-    const disabledEmails = emailEntries.filter((entry) => isDisabled(entry.user.account.status));
-    const enabledEmails = emailEntries.filter((entry) => isEnabled(entry.user.account.status));
-
-    const emailCreations = emailEntries.map((entry) => `year${moment(entry.objectInfo.whenCreated).format(`YYYY`)}`);
-
+    const emailCreations = mapUsersToCreationYears(emailEntries);
     const yearsOfEmailsCreation = getYears(emailCreations);
 
-    const emailLastLogons = emailEntries.map((entry) => entry.user.account.lastLogon === null ? `never` : `year${moment(entry.user.account.lastLogon).format(`YYYY`)}`);
-
+    const emailLastLogons = mapUsersToLastLogonYears(emailEntries);
     const yearsOfEmailsLastLogons = getYears(emailLastLogons);
 
     return {
       timeStamp,
       count: {
         all: emailEntries.length,
-        enabled: enabledEmails.length,
-        disabled: disabledEmails.length,
+        enabled: getEnabledUsers(emailEntries).length,
+        disabled: getDisabledUsers(emailEntries).length,
         allBoxesSize: allBoxesSize.toFixed(2),
       },
       creation: mapEntriesToYears(yearsOfEmailsCreation, emailCreations),
