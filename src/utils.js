@@ -2,16 +2,22 @@
 
 const fs = require(`fs`);
 const {promisify} = require(`util`);
+const notify = require('./service/tg-notifier');
+
+const logMessage = async (msg) => {
+  console.log(msg);
+  await notify(`AD-ENTRIES-BACK: '${msg}'`);
+};
 
 const saveToFile = async (path, data) => {
   const writeFile = promisify(fs.writeFile);
 
   try {
     await writeFile(path, data);
-    console.log(`Operation success. File '${path}' created.`);
+    await logMessage(`Operation success. File '${path}' is created.`);
 
   } catch (error) {
-    console.error(`Can't write data to file...`);
+    await logMessage(`Error: Can't write data to file '${path}'.`);
   }
 };
 
@@ -20,11 +26,11 @@ const readFromFile = async (path) => {
 
   try {
     const result = await readFile(path);
-    console.log(`Operation success. File '${path}' is read.`);
+    await logMessage(`Operation success. File '${path}' is read.`);
     return result;
 
   } catch (error) {
-    console.error(`Can't read file '${path}'`);
+    await logMessage(`Can't read file '${path}'`);
     return error.message;
   }
 };
@@ -38,11 +44,11 @@ const ldapYmdToJsDate = (ldapDate) => {
 
 const ldapSearch = async (client, settings, searchOptions, adapter) => {
   await client.bind(settings.USERNAME, settings.PASSWORD, [])
-    .then(() => {
-      console.log(`Successful binding to ${settings.URL} by ${settings.USERNAME}`);
-      console.log(`Try fetch data by query '${searchOptions.filter}'`);
+    .then(async () => {
+      await logMessage(`Successful binding to ${settings.URL} by ${settings.USERNAME}`);
+      await logMessage(`Try fetch data by query '${searchOptions.filter}'`);
     })
-    .catch((err) => console.log(`Error: ${err.message}`));
+    .catch(async (err) => await logMessage(`Error: ${err.message}`));
 
   return await client.search(settings.BASE_DN, searchOptions)
     .then((res) => {
@@ -58,13 +64,13 @@ const ldapSearch = async (client, settings, searchOptions, adapter) => {
           if (result.status !== 0) {
             return reject(result.status);
           }
-          console.log(`Entries found: ${entries.length}`);
+          await logMessage(`Entries found: ${entries.length}`);
 
           return resolve(entries);
         });
       });
     })
-    .catch((err) => console.log(`Error: ${err.message}`));
+    .catch(async (err) => await logMessage(`Error: ${err.message}`));
 };
 
-module.exports = {saveToFile, readFromFile, ldapTimeValueToJsDate, ldapYmdToJsDate, ldapSearch};
+module.exports = {saveToFile, readFromFile, ldapTimeValueToJsDate, ldapYmdToJsDate, ldapSearch, logMessage};
