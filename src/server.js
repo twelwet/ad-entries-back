@@ -24,7 +24,7 @@ app.get(`/users/all`, async (req, res) => {
   try {
     const result = await downLoadAllEntries(Type.USER, Value.USER, getUserAdapter, FileName.USERS);
     res.json(result);
-    await logMessage(`${req.method} ${req.originalUrl} -> response: '${res.statusCode}'`);
+    await logMessage(`${req.method} ${decodeURI(req.originalUrl)} -> response: '${res.statusCode}'`);
   } catch (error) {
     res.json([]);
     await logMessage(`Error occurs: ${error}`);
@@ -37,7 +37,7 @@ app.get(`/users/:field/:queryValue`, async (req, res) => {
     const queryValue = req.params.queryValue;
     const result = await queryEntries(Type.USER, Value.USER, field, queryValue, getUserAdapter);
     res.json(result);
-    await logMessage(`${req.method} ${req.originalUrl} -> response: '${res.statusCode}'`);
+    await logMessage(`${req.method} ${decodeURI(req.originalUrl)} -> response: '${res.statusCode}'`);
   } catch (error) {
     res.json([]);
     await logMessage(`Error occurs: ${error}`);
@@ -47,7 +47,7 @@ app.get(`/users/:field/:queryValue`, async (req, res) => {
 app.get(`/accounts`, async (req, res) => {
   try {
     res.json(await getAccounts());
-    await logMessage(`${req.method} ${req.originalUrl} -> response: '${res.statusCode}'`);
+    await logMessage(`${req.method} ${decodeURI(req.originalUrl)} -> response: '${res.statusCode}'`);
   } catch (error) {
     res.json({});
     await logMessage(`Error occurs: ${error}`);
@@ -57,7 +57,7 @@ app.get(`/accounts`, async (req, res) => {
 app.get(`/emails`, async (req, res) => {
   try {
     res.json(await getEmails());
-    await logMessage(`${req.method} ${req.originalUrl} -> response: '${res.statusCode}'`);
+    await logMessage(`${req.method} ${decodeURI(req.originalUrl)} -> response: '${res.statusCode}'`);
   } catch (error) {
     res.json({});
     await logMessage(`Error occurs: ${error}`);
@@ -68,7 +68,7 @@ app.get(`/groups/all`, async (req, res) => {
   try {
     const result = await downLoadAllEntries(Type.GROUP, Value.GROUP, getGroupAdapter, FileName.GROUPS);
     res.json(result);
-    await logMessage(`${req.method} ${req.originalUrl} -> response: '${res.statusCode}'`);
+    await logMessage(`${req.method} ${decodeURI(req.originalUrl)} -> response: '${res.statusCode}'`);
   } catch (error) {
     res.json([]);
     await logMessage(`Error occurs: ${error}`);
@@ -81,7 +81,7 @@ app.get(`/groups/:field/:queryValue`, async (req, res) => {
     const queryValue = req.params.queryValue;
     const result = await queryEntries(Type.GROUP, Value.GROUP, field, queryValue, getGroupAdapter);
     res.json(result);
-    await logMessage(`${req.method} ${req.originalUrl} -> response: '${res.statusCode}'`);
+    await logMessage(`${req.method} ${decodeURI(req.originalUrl)} -> response: '${res.statusCode}'`);
   } catch (error) {
     res.json([]);
     await logMessage(`Error occurs: ${error}`);
@@ -92,7 +92,7 @@ app.get(`/ous/all`, async (req, res) => {
   try {
     const result = await downLoadAllEntries(Type.OU, Value.OU, getOUAdapter, FileName.OUS);
     res.json(result);
-    await logMessage(`${req.method} ${req.originalUrl} -> response: '${res.statusCode}'`);
+    await logMessage(`${req.method} ${decodeURI(req.originalUrl)} -> response: '${res.statusCode}'`);
   } catch (error) {
     res.json([]);
     await logMessage(`Error occurs: ${error}`);
@@ -105,7 +105,7 @@ app.get(`/ous/:field/:queryValue`, async (req, res) => {
     const queryValue = req.params.queryValue;
     const result = await queryEntries(Type.OU, Value.OU, field, queryValue, getOUAdapter);
     res.json(result);
-    await logMessage(`${req.method} ${req.originalUrl} -> response: '${res.statusCode}'`);
+    await logMessage(`${req.method} ${decodeURI(req.originalUrl)} -> response: '${res.statusCode}'`);
   } catch (error) {
     res.json([]);
     await logMessage(`Error occurs: ${error}`);
