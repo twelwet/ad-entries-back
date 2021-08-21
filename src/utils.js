@@ -2,7 +2,7 @@
 
 const fs = require(`fs`);
 const {promisify} = require(`util`);
-const notify = require('./service/tg-notifier');
+const notify = require(`./service/tg-notifier`);
 
 const logMessage = async (msg) => {
   console.log(msg);

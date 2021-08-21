@@ -10,7 +10,7 @@ const getOUAdapter = require(`./adapters/ou-adapter`);
 const {LdapObject, FileName} = require(`./constants`);
 const getAccounts = require(`./methods-local/get-accounts`);
 const getEmails = require(`./methods-local/get-emails`);
-const {logMessage} = require('./utils');
+const {logMessage} = require(`./utils`);
 
 const {Type, Value} = LdapObject;
 

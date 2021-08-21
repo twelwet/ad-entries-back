@@ -9,6 +9,7 @@ const {
   mapUsersToLastLogonYears,
   getYears,
   mapEntriesToYears,
+  getCountsByBoxSizes,
 } = require(`./utils`);
 const {TOP_BOXES} = require(`../constants`);
 const getUsers = require(`../data/get-users`);
@@ -16,7 +17,7 @@ const getUsers = require(`../data/get-users`);
 const getEmails = async () => {
   try {
     const {timeStamp, data: allEntries} = await getUsers();
-    const emailEntries = allEntries.filter((entry) => entry.user.person.email);
+    const emailEntries = allEntries.filter((entry) => entry.user.person.email !== null);
 
     const topBoxes = emailEntries
       .sort((a, b) => b.user.person.emailBoxSize - a.user.person.emailBoxSize)
@@ -42,6 +43,7 @@ const getEmails = async () => {
       },
       creation: mapEntriesToYears(yearsOfEmailsCreation, emailCreations),
       lastLogon: mapEntriesToYears(yearsOfEmailsLastLogons, emailLastLogons),
+      volumes: getCountsByBoxSizes(emailEntries),
       topBoxes,
     };
 
