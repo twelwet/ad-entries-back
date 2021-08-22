@@ -37,61 +37,90 @@ const isBoxBetween1And5Gb = (size) => getBoxSize(size) >= 1 && getBoxSize(size) 
 const isBoxBetween5And10Gb = (size) => getBoxSize(size) >= 5 && getBoxSize(size) < 10;
 
 const getCountsByBoxSizes = (entriesWithEmail) => {
-  let countLess100Mb = 0;
-  let countBetween100And500Mb = 0;
-  let countBetween500And1000Mb = 0;
-  let countBetween1And5Gb = 0;
-  let countBetween5And10Gb = 0;
-  let countMoreThan10Gb = 0;
+  const count = {
+    lessThan100Mb: {boxesCount: 0, quotasCount: 0, summaryBoxSize: 0},
+    between100And500Mb: {boxesCount: 0, quotasCount: 0, summaryBoxSize: 0},
+    between500And1000Mb: {boxesCount: 0, quotasCount: 0, summaryBoxSize: 0},
+    between1And5Gb: {boxesCount: 0, quotasCount: 0, summaryBoxSize: 0},
+    between5And10Gb: {boxesCount: 0, quotasCount: 0, summaryBoxSize: 0},
+    moreThan10Gb: {boxesCount: 0, quotasCount: 0, summaryBoxSize: 0},
+  };
 
-  let quotasLessThan100Mb = 0;
-  let quotasBetween100And500Mb = 0;
-  let quotasBetween500And1000Mb = 0;
-  let quotasBetween1And5Gb = 0;
-  let quotasBetween5And10Gb = 0;
-  let quotasMoreThan10Gb = 0;
+  const {lessThan100Mb, between100And500Mb, between500And1000Mb, between1And5Gb, between5And10Gb, moreThan10Gb} = count;
 
   for (const entry of entriesWithEmail) {
+    const boxSize = parseInt(entry.user.person.emailBoxSize, 10);
+    const quotaSize = parseInt(entry.user.person.emailQuota, 10);
+
     if (isBoxLessThan100Mb(entry.user.person.emailBoxSize)) {
-      countLess100Mb++;
-      if (parseInt(entry.user.person.emailQuota, 10) > 0) {
-        quotasLessThan100Mb++;
-      }
+      lessThan100Mb.boxesCount++;
+      boxSize > 0 ? lessThan100Mb.summaryBoxSize = lessThan100Mb.summaryBoxSize + boxSize : null;
+      quotaSize > 0 ? lessThan100Mb.quotasCount++ : null;
+
     } else if (isBoxBetween100And500Mb(entry.user.person.emailBoxSize)) {
-      countBetween100And500Mb++;
-      if (parseInt(entry.user.person.emailQuota, 10) > 0) {
-        quotasBetween100And500Mb++;
-      }
+      between100And500Mb.boxesCount++;
+      boxSize > 0 ? between100And500Mb.summaryBoxSize = between100And500Mb.summaryBoxSize + boxSize : null;
+      quotaSize > 0 ? between100And500Mb.quotasCount++ : null;
+
     } else if (isBoxBetween500And1000Mb(entry.user.person.emailBoxSize)) {
-      countBetween500And1000Mb++;
-      if (parseInt(entry.user.person.emailQuota, 10) > 0) {
-        quotasBetween500And1000Mb++;
-      }
+      between500And1000Mb.boxesCount++;
+      boxSize > 0 ? between500And1000Mb.summaryBoxSize = between500And1000Mb.summaryBoxSize + boxSize : null;
+      quotaSize > 0 ? between500And1000Mb.quotasCount++ : null;
+
     } else if (isBoxBetween1And5Gb(entry.user.person.emailBoxSize)) {
-      countBetween1And5Gb++;
-      if (parseInt(entry.user.person.emailQuota, 10) > 0) {
-        quotasBetween1And5Gb++;
-      }
+      between1And5Gb.boxesCount++;
+      boxSize > 0 ? between1And5Gb.summaryBoxSize = between1And5Gb.summaryBoxSize + boxSize : null;
+      quotaSize > 0 ? between1And5Gb.quotasCount++ : null;
+
     } else if (isBoxBetween5And10Gb(entry.user.person.emailBoxSize)) {
-      countBetween5And10Gb++;
-      if (parseInt(entry.user.person.emailQuota, 10) > 0) {
-        quotasBetween5And10Gb++;
-      }
+      between5And10Gb.boxesCount++;
+      boxSize > 0 ? between5And10Gb.summaryBoxSize = between5And10Gb.summaryBoxSize + boxSize : null;
+      quotaSize > 0 ? between5And10Gb.quotasCount++ : null;
+
     } else {
-      countMoreThan10Gb++;
-      if (parseInt(entry.user.person.emailQuota, 10) > 0) {
-        quotasMoreThan10Gb++;
-      }
+      moreThan10Gb.boxesCount++;
+      boxSize > 0 ? moreThan10Gb.summaryBoxSize = moreThan10Gb.summaryBoxSize + boxSize : null;
+      quotaSize > 0 ? moreThan10Gb.quotasCount++ : null;
     }
   }
 
   return [
-    {name: `Less than 100Mb`, count: countLess100Mb, quotas: quotasLessThan100Mb},
-    {name: `Between 100Mb and 500Mb`, count: countBetween100And500Mb, quotas: quotasBetween100And500Mb},
-    {name: `Between 500Mb and 1Gb`, count: countBetween500And1000Mb, quotas: quotasBetween500And1000Mb},
-    {name: `Between 1Gb and 5Gb`, count: countBetween1And5Gb, quotas: quotasBetween1And5Gb},
-    {name: `Between 5Gb and 10Gb`, count: countBetween5And10Gb, quotas: quotasBetween5And10Gb},
-    {name: `More than 10Gb`, count: countMoreThan10Gb, quotas: quotasMoreThan10Gb},
+    {
+      name: `Less than 100Mb`,
+      count: count.lessThan100Mb.boxesCount,
+      quotas: count.lessThan100Mb.quotasCount,
+      summarySize: getBoxSize(count.lessThan100Mb.summaryBoxSize),
+    },
+    {
+      name: `Between 100Mb and 500Mb`,
+      count: count.between100And500Mb.boxesCount,
+      quotas: count.between100And500Mb.quotasCount,
+      summarySize: getBoxSize(count.between100And500Mb.summaryBoxSize),
+    },
+    {
+      name: `Between 500Mb and 1Gb`,
+      count: count.between500And1000Mb.boxesCount,
+      quotas: count.between500And1000Mb.quotasCount,
+      summarySize: getBoxSize(count.between500And1000Mb.summaryBoxSize),
+    },
+    {
+      name: `Between 1Gb and 5Gb`,
+      count: count.between1And5Gb.boxesCount,
+      quotas: count.between1And5Gb.quotasCount,
+      summarySize: getBoxSize(count.between1And5Gb.summaryBoxSize),
+    },
+    {
+      name: `Between 5Gb and 10Gb`,
+      count: count.between5And10Gb.boxesCount,
+      quotas: count.between5And10Gb.quotasCount,
+      summarySize: getBoxSize(count.between5And10Gb.summaryBoxSize),
+    },
+    {
+      name: `More than 10Gb`,
+      count: count.moreThan10Gb.boxesCount,
+      quotas: count.moreThan10Gb.quotasCount,
+      summarySize: getBoxSize(count.moreThan10Gb.summaryBoxSize),
+    },
   ];
 };
 
