@@ -5,11 +5,14 @@ const {
   getBoxSize,
   getDisabledUsers,
   getEnabledUsers,
+  getQuotedUsers,
+  getNotQuotedUsers,
   mapUsersToCreationYears,
   mapUsersToLastLogonYears,
   getYears,
   mapEntriesToYears,
   getCountsByBoxSizes,
+  getCountsByQuotas,
 } = require(`./utils`);
 const {TOP_BOXES} = require(`../constants`);
 const getUsers = require(`../data/get-users`);
@@ -39,11 +42,14 @@ const getEmails = async () => {
         all: emailEntries.length,
         enabled: getEnabledUsers(emailEntries).length,
         disabled: getDisabledUsers(emailEntries).length,
+        quoted: getQuotedUsers(emailEntries).length,
+        notQuoted: getNotQuotedUsers(emailEntries).length,
         allBoxesSize: allBoxesSize.toFixed(2),
       },
+      volumes: getCountsByBoxSizes(emailEntries),
+      quotas: getCountsByQuotas(emailEntries, false),
       creation: mapEntriesToYears(yearsOfEmailsCreation, emailCreations),
       lastLogon: mapEntriesToYears(yearsOfEmailsLastLogons, emailLastLogons),
-      volumes: getCountsByBoxSizes(emailEntries),
       topBoxes,
     };
 

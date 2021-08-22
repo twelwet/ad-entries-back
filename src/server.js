@@ -9,6 +9,7 @@ const getGroupAdapter = require(`./adapters/group-adapter`);
 const getOUAdapter = require(`./adapters/ou-adapter`);
 const {LdapObject, FileName} = require(`./constants`);
 const getAccounts = require(`./methods-local/get-accounts`);
+const getQuotas = require(`./methods-local/get-quotas`);
 const getEmails = require(`./methods-local/get-emails`);
 const {logMessage} = require(`./utils`);
 
@@ -105,6 +106,16 @@ app.get(`/ous/:field/:queryValue`, async (req, res) => {
     const queryValue = req.params.queryValue;
     const result = await queryEntries(Type.OU, Value.OU, field, queryValue, getOUAdapter);
     res.json(result);
+    await logMessage(`${req.method} ${decodeURI(req.originalUrl)} -> response: '${res.statusCode}'`);
+  } catch (error) {
+    res.json([]);
+    await logMessage(`Error occurs: ${error}`);
+  }
+});
+
+app.get(`/quotas`, async (req, res) => {
+  try {
+    res.json(await getQuotas());
     await logMessage(`${req.method} ${decodeURI(req.originalUrl)} -> response: '${res.statusCode}'`);
   } catch (error) {
     res.json([]);
