@@ -40,7 +40,7 @@ const getUserAdapter = (userFromService) => {
         displayName,
         email: mail ? mail : null,
         emailBoxSize: drink ? drink : null,
-        emailQuota: mDBOverQuotaLimit,
+        emailQuota: mDBOverQuotaLimit ? mDBOverQuotaLimit : null,
         telephoneNumber: telephoneNumber ? telephoneNumber : null,
         whenEmailCreated: msExchWhenMailboxCreated !== undefined ? ldapYmdToJsDate(msExchWhenMailboxCreated) : null,
       },
