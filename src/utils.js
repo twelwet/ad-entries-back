@@ -2,11 +2,12 @@
 
 const fs = require(`fs`);
 const {promisify} = require(`util`);
-const notify = require(`./service/tg-notifier`);
+// const notify = require(`./service/tg-notifier`);
+const {parse} = require(`json2csv`);
 
 const logMessage = async (msg) => {
   console.log(msg);
-  await notify(`AD-ENTRIES-BACK: '${msg}'`);
+  // await notify(`AD-ENTRIES-BACK: '${msg}'`);
 };
 
 const saveToFile = async (path, data) => {
@@ -73,4 +74,15 @@ const ldapSearch = async (client, settings, searchOptions, adapter) => {
     .catch(async (err) => await logMessage(`Error: ${err.message}`));
 };
 
-module.exports = {saveToFile, readFromFile, ldapTimeValueToJsDate, ldapYmdToJsDate, ldapSearch, logMessage};
+const getCsvFromJson = (jsonData, fields, delimiter = `,`) => {
+  const opts = {fields, delimiter};
+
+  try {
+    return parse(jsonData, opts);
+  } catch (err) {
+    console.error(err);
+    return err;
+  }
+};
+
+module.exports = {saveToFile, readFromFile, ldapTimeValueToJsDate, ldapYmdToJsDate, ldapSearch, logMessage, getCsvFromJson};
