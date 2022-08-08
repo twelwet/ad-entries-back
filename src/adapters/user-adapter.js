@@ -37,21 +37,21 @@ const getUserAdapter = (userFromService) => {
     },
     user: {
       person: {
-        displayName,
+        displayName: displayName ? displayName : null,
         email: mail ? mail : null,
         emailBoxSize: drink ? drink : null,
         emailQuota: mDBOverQuotaLimit ? mDBOverQuotaLimit : null,
         telephoneNumber: telephoneNumber ? telephoneNumber : null,
         whenEmailCreated: msExchWhenMailboxCreated !== undefined ? ldapYmdToJsDate(msExchWhenMailboxCreated) : null,
       },
-      company: {position: title, name: company},
+      company: {position: title ? title : null, name: company ? company : null},
       account: {
-        status: userAccountControl,
-        name: sAMAccountName,
-        fullName: userPrincipalName,
+        status: userAccountControl ? userAccountControl : null,
+        name: sAMAccountName ? sAMAccountName : null,
+        fullName: userPrincipalName ? userPrincipalName : null,
         lastLogon: lastLogon === `0` ? null : ldapTimeValueToJsDate(lastLogon),
         pwdLastSet: ldapTimeValueToJsDate(pwdLastSet),
-        logonCount,
+        logonCount: logonCount ? logonCount : null,
       },
     },
   };
