@@ -2,13 +2,13 @@
 
 const fs = require(`fs`);
 const {promisify} = require(`util`);
-// const notify = require(`./service/tg-notifier`);
+const notify = require(`./service/tg-notifier`);
 const {parse} = require(`json2csv`);
 const csvToJson = require(`csvtojson`);
 
 const logMessage = async (msg) => {
   console.log(msg);
-  // await notify(`AD-ENTRIES-BACK: '${msg}'`);
+  await notify(`AD-ENTRIES-BACK: '${msg}'`);
 };
 
 const saveToFile = async (path, data) => {
