@@ -4,6 +4,7 @@ const fs = require(`fs`);
 const {promisify} = require(`util`);
 // const notify = require(`./service/tg-notifier`);
 const {parse} = require(`json2csv`);
+const csvToJson = require(`csvtojson`);
 
 const logMessage = async (msg) => {
   console.log(msg);
@@ -85,4 +86,10 @@ const getCsvFromJson = (jsonData, fields, delimiter = `,`) => {
   }
 };
 
-module.exports = {saveToFile, readFromFile, ldapTimeValueToJsDate, ldapYmdToJsDate, ldapSearch, logMessage, getCsvFromJson};
+const getJsonFromCsv = (filename, delimiter = `,`) => {
+  return csvToJson({delimiter})
+    .fromFile(filename)
+    .then((json) => json);
+};
+
+module.exports = {saveToFile, readFromFile, ldapTimeValueToJsDate, ldapYmdToJsDate, ldapSearch, logMessage, getCsvFromJson, getJsonFromCsv};
