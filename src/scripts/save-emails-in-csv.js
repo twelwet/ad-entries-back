@@ -19,12 +19,12 @@ getUsers().then((users) => {
 
   const result = emailEntries.map((item) => ({
     name: item[`user`][`person`][`displayName`],
-    position: item[`company`][`position`],
-    company: item[`company`][`name`],
+    position: item[`user`][`company`][`position`],
+    company: item[`user`][`company`][`name`],
     email: item[`user`][`person`][`email`],
     size: item[`user`][`person`][`emailBoxSize`],
     quota: item[`user`][`person`][`emailQuota`],
-    lastLogon: item[`account`][`lastLogon`],
+    lastLogon: item[`user`][`account`][`lastLogon`],
   }));
 
   saveToFile(`src/download/emails.csv`, getCsvFromJson(result, FIELDS))
